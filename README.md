@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Transformer Oil Expansion Tool
 
-## Getting Started
+A web-based calculator that helps transformer designers determine oil level rise due to thermal expansion — built using modern web tools and grounded in real-world engineering needs.
 
-First, run the development server:
+Live Demo: [https://transformer-tool-tailwind.vercel.app](https://transformer-tool-tailwind.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 What It Does
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Given:
+- Transformer shape (rectangular or cylindrical)
+- Tank dimensions
+- Volume of insulating oil
+- Ambient and maximum hot oil temperatures
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The tool calculates:
+- Expected oil expansion (volume)
+- Vertical rise of the oil level
 
-## Learn More
+It assumes a fixed thermal expansion coefficient (default: 0.00075 /°C) and treats the oil-air interface as free-rising, ignoring core displacement for now.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Who It's For
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Engineers designing or reviewing distribution transformers who need to:
 
-## Deploy on Vercel
+- Ensure thermal sensors like IFDs are placed above the hot oil level
+- Estimate oil behavior at elevated temperatures
+- Avoid manual spreadsheet calculations or guesswork
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧰 Tech Stack
+
+- **Next.js 15** (App Router)
+- **React** + **TypeScript**
+- **Tailwind CSS** for styling
+- **Vercel** for deployment
+
+---
+
+## 📂 Project Structure
+
+- `src/app/page.tsx`: Main form and logic
+- Fully client-side; no backend dependencies
+
+---
+
+## 🚀 Future Features (Planned)
+
+- Input validation and error handling
+- Option to enter oil level height at ambient temperature
+- Optional core displacement modeling
+- Export results as PDF or image
+
+---
+
+## 👨‍💻 Author
+
+Stephen Gilbert – Mechatronics Engineer pivoting into software development  
+[LinkedIn](https://www.linkedin.com/in/stephenjgilbert)  
