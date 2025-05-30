@@ -57,54 +57,33 @@ export default function Home() {
           Estimate oil rise based on volume, temperature, and tank shape.
         </p>
 
-      <div className="space-y-1">
-        <label className="block text-sm font-medium text-gray-700">
-        Volume unit:
-        </label>
-        <select 
-          value={volumeUnit} 
-          onChange={(e) => setVolumeUnit(e.target.value as "liters" | "gallons")}
-          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-          <option value="liters">Liters</option>
-          <option value="gallons">Gallons</option>
-        </select>
-     
-      </div>
 
-      <br />
-
-      <div className="space-y-1">
-        <label className="block text-sm font-medium text-gray-700">
-          Volume ({volumeUnit})
-        </label>
-        <input
+      <div className="flex gap-4 items-end">
+        <div className="flex-1 space-y-1">
+          <label className="block text-sm font-medium text-gray-700">Volume</label>
+          <input
           type="number"
           value={volume}
           onChange={(e) => setVolume(parseFloat(e.target.value))}
           className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <br />
-
-      <div className="space-y-1">
-        <label className="block text-sm font-medium text-gray-700">
-          Length unit
-        </label>
-        <select
-          value={lengthUnit}
-          onChange={(e) => setLengthUnit(e.target.value as "cm" | "in")}
+          />
+        </div>
+        <div className="w-32 space-y-1">
+          <label className="block text-sm font-medium text-gray-700">Unit</label>
+          <select
+          value={volumeUnit}
+          onChange={(e) => setVolumeUnit(e.target.value as "liters" | "gallons")}
           className="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="cm">Centimeters</option>
-          <option value="in">Inches</option>
-        </select>
+          >
+            <option value="liters">Liters</option>
+            <option value="gallons">Gallons</option>
+          </select>
+        </div>
       </div>
 
-      <br />
 
-      <div className="space-y-1">
+
+<div className="space-y-1">
         <label className="block text-sm font-medium text-gray-700">
           Tank shape
         </label>
@@ -117,74 +96,107 @@ export default function Home() {
           <option value="cylindrical">Cylindrical</option>
         </select>
       </div>
+      
 
-
-      <br />
 
       {tankShape === "rectangular" ? (
         <>
-          <label>
-            Length ({lengthUnit}):
-            <input
-              type="number"
-              value={length}
-              onChange={(e) => setLength(parseFloat(e.target.value))}
-            />
-          </label>
-          <br />
-          <label>
-            Width ({lengthUnit}):
-            <input
-              type="number"
-              value={width}
-              onChange={(e) => setWidth(parseFloat(e.target.value))}
-            />
-          </label>
+          <div className="flex gap-4 items-end">
+  <div className="flex-1 space-y-1">
+    <label className="block text-sm font-medium text-gray-700">Length</label>
+    <input
+      type="number"
+      value={length}
+      onChange={(e) => setLength(parseFloat(e.target.value))}
+      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <div className="flex-1 space-y-1">
+    <label className="block text-sm font-medium text-gray-700">Width</label>
+    <input
+      type="number"
+      value={width}
+      onChange={(e) => setWidth(parseFloat(e.target.value))}
+      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <div className="w-32 space-y-1">
+    <label className="block text-sm font-medium text-gray-700">Unit</label>
+    <select
+      value={lengthUnit}
+      onChange={(e) => setLengthUnit(e.target.value as "cm" | "in")}
+      className="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="cm">cm</option>
+      <option value="in">in</option>
+    </select>
+  </div>
+</div>
+
         </>
       ) : (
-        <label>
-          Diameter ({lengthUnit}):
-          <input
+        <div className="flex gap-4 items-end">
+  <div className="flex-1 space-y-1">
+    <label className="block text-sm font-medium text-gray-700">Diameter</label>
+    <input
+      type="number"
+      value={diameter}
+      onChange={(e) => setDiameter(parseFloat(e.target.value))}
+      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <div className="w-32 space-y-1">
+    <label className="block text-sm font-medium text-gray-700">Unit</label>
+    <select
+      value={lengthUnit}
+      onChange={(e) => setLengthUnit(e.target.value as "cm" | "in")}
+      className="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="cm">cm</option>
+      <option value="in">in</option>
+    </select>
+  </div>
+</div>
+
+                )}
+
+
+
+      <div className="space-y-1">
+            <label className="block text-sm font-medium text-gray-700">Ambient Temperature (°C)</label>
+            <input
             type="number"
-            value={diameter}
-            onChange={(e) => setDiameter(parseFloat(e.target.value))}
-          />
-        </label>
-      )}
+            value={ambientTemp}
+            onChange={(e) => setAmbientTemp(parseFloat(e.target.value))}
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            </div>
+   
 
-      <br />
-
-      <label>
-        Ambient temperature (°C):
-        <input
-          type="number"
-          value={ambientTemp}
-          onChange={(e) => setAmbientTemp(parseFloat(e.target.value))}
-        />
-      </label>
-
-      <br />
-
-      <label>
-        Hot temperature (°C):
+      <div className="space-y-1">
+        <label className="block text-sm font-medium text-gray-700">Hot Temperature (°C)</label>  
         <input
           type="number"
           value={hotTemp}
           onChange={(e) => setHotTemp(parseFloat(e.target.value))}
-        />
-      </label>
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            </div>
+  
 
-      <br />
-
-      <label>
-        Thermal expansion coefficient (/°C):
+      <div className="space-y-1">
+        <label className="block text-sm font-medium text-gray-700">Thermal Expansion Coefficient (°C)</label>  
         <input
           type="number"
           step="0.00001"
           value={expansionCoeff}
           onChange={(e) => setExpansionCoeff(parseFloat(e.target.value))}
-        />
-      </label>
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+      </div>
 
       <hr className="my-6" />
       <h2 className="text-lg font-semibold text-gray-700">Results</h2>
