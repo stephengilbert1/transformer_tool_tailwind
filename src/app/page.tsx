@@ -31,7 +31,7 @@ export default function Home() {
   const [ambientTemp, setAmbientTemp] = useState<number>(25);
   const [hotTemp, setHotTemp] = useState<number>(140);
   const [expansionCoeff, setExpansionCoeff] = useState<number>(0.00075);
-  const [ambientOilLevel, setAmbientOilLevel] = useState<number>(30);
+  const [ambientOilLevel, setAmbientOilLevel] = useState<number>(26);
   const [tankHeight, setTankHeight] = useState<number>(30); // default 30 inches
 
   const [datumReference, setDatumReference] = useState<"bottom" | "top">(
