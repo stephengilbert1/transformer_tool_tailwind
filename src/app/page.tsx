@@ -32,6 +32,11 @@ export default function Home() {
   const [hotTemp, setHotTemp] = useState<number>(140);
   const [expansionCoeff, setExpansionCoeff] = useState<number>(0.00075);
   const [ambientOilLevel, setAmbientOilLevel] = useState<number>(30);
+  const [tankHeight, setTankHeight] = useState<number>(30); // default 30 inches
+
+  const [datumReference, setDatumReference] = useState<"bottom" | "top">(
+    "bottom"
+  );
 
   // Conversion
   const volumeLiters = convertVolumeToLiters(volume, volumeUnit);
@@ -47,10 +52,12 @@ export default function Home() {
   const expandedVolume = volumeLiters * (1 + expansionCoeff * deltaTemp);
 
   // Heights
-  const ambientOilLevelMeters = convertLengthToMeters(
-    ambientOilLevel,
-    lengthUnit
-  );
+  const tankHeightMeters = convertLengthToMeters(tankHeight, lengthUnit);
+
+  const ambientOilLevelMeters =
+    datumReference === "bottom"
+      ? convertLengthToMeters(ambientOilLevel, lengthUnit)
+      : tankHeightMeters - convertLengthToMeters(ambientOilLevel, lengthUnit);
 
   // Calculate the oil *rise* due to expansion
   const oilRise = (expandedVolume - volumeLiters) / 1000 / crossSectionArea;
@@ -247,8 +254,22 @@ export default function Home() {
             </strong>
           </p>
         </div>
+        <div className="flex gap-4 items-end">
+          <div className="flex-1 space-y-1">
+            <label className="block text-sm font-medium text-gray-700">
+              Tank Height ({lengthUnit})
+            </label>
+            <input
+              type="number"
+              value={tankHeight}
+              onChange={(e) => setTankHeight(parseFloat(e.target.value))}
+              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
 
         <div className="flex gap-4 items-end">
+          {/* Ambient Oil Level Input */}
           <div className="flex-1 space-y-1">
             <label className="block text-sm font-medium text-gray-700">
               Ambient Oil Level
@@ -260,13 +281,22 @@ export default function Home() {
               className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="w-32 space-y-1">
+
+          {/* Datum Dropdown */}
+          <div className="w-40 space-y-1">
             <label className="block text-sm font-medium text-gray-700">
-              Unit
+              Datum
             </label>
-            <div className="px-3 py-2 border border-gray-300 rounded bg-gray-100 flex items-center h-[40px]">
-              {lengthUnit}
-            </div>
+            <select
+              value={datumReference}
+              onChange={(e) =>
+                setDatumReference(e.target.value as "bottom" | "top")
+              }
+              className="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="bottom">From Bottom</option>
+              <option value="top">From Top</option>
+            </select>
           </div>
         </div>
 
@@ -285,6 +315,7 @@ export default function Home() {
               hotOilLevel={hotOilLevelMeters}
               ambientTemp={ambientTemp}
               hotTemp={hotTemp}
+              tankHeightMeters={tankHeightMeters}
             />
           )}
       </div>

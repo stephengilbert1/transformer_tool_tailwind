@@ -3,6 +3,7 @@ type OilLevelVisualizerProps = {
   hotOilLevel: number; // in meters
   ambientTemp: number; // In C
   hotTemp: number;
+  tankHeightMeters: number;
 };
 
 export default function OilLevelVisualizer({
@@ -10,21 +11,36 @@ export default function OilLevelVisualizer({
   hotOilLevel,
   ambientTemp,
   hotTemp,
+  tankHeightMeters,
 }: OilLevelVisualizerProps) {
-  const tankHeightMeters = 1.0; // assume max 1m visual tank
-  const svgHeight = 200;
+  const topPadding = 40; // extra space for labels (in pixels)
+  const tankDisplayHeight = 200; // visual height in pixels
   const tankWidth = 100;
 
-  const scale = svgHeight / tankHeightMeters;
+  const scale = tankDisplayHeight / tankHeightMeters;
+  const svgHeight = tankDisplayHeight + topPadding;
+
+  const ambientY = topPadding + tankDisplayHeight - ambientOilLevel * scale;
+  let hotY = topPadding + tankDisplayHeight - hotOilLevel * scale;
+
+  // Ensure at least 16px spacing between labels
+  const minSpacing = 16;
+  if (Math.abs(hotY - ambientY) < minSpacing) {
+    if (hotY < ambientY) {
+      hotY = ambientY - minSpacing;
+    } else {
+      hotY = ambientY + minSpacing;
+    }
+  }
 
   return (
     <svg viewBox={`0 0 120 ${svgHeight}`} className="w-full h-64">
       {/* Tank outline */}
       <rect
         x="30"
-        y="0"
+        y={topPadding}
         width={tankWidth}
-        height={svgHeight}
+        height={tankDisplayHeight}
         fill="#e5e7eb"
         stroke="#9ca3af"
         strokeWidth="2"
@@ -33,9 +49,9 @@ export default function OilLevelVisualizer({
       {/* Ambient oil level (blue) */}
       <rect
         x="30"
-        y={svgHeight - ambientOilLevel * scale}
+        y={ambientY}
         width={tankWidth}
-        height={ambientOilLevel * scale}
+        height={svgHeight - ambientY}
         fill="blue"
         opacity="0.4"
       />
@@ -43,39 +59,38 @@ export default function OilLevelVisualizer({
       {/* Hot oil level (red) */}
       <rect
         x="30"
-        y={svgHeight - hotOilLevel * scale}
+        y={hotY}
         width={tankWidth}
-        height={(hotOilLevel - ambientOilLevel) * scale}
+        height={ambientY - hotY}
         fill="red"
         opacity="0.3"
       />
 
-      {/* Labels */}
-      <text
-        x="10"
-        y={
-          Number.isFinite(ambientOilLevel * scale)
-            ? svgHeight - ambientOilLevel * scale - 5
-            : 0
-        }
-        fontSize="12"
-        fill="#4B5563"
-      >
-        Ambient Oil Level ({ambientTemp} °C)
+      {/* Ambient label and line */}
+      <text x="-100" y={ambientY - 2} fontSize="12" fill="#3B82F6">
+        Ambient ({ambientTemp}°C)
       </text>
+      <line
+        x1="-100"
+        x2="30"
+        y1={ambientY}
+        y2={ambientY}
+        stroke="#3B82F6"
+        strokeWidth="1"
+      />
 
-      <text
-        x="10"
-        y={
-          Number.isFinite(hotOilLevel * scale)
-            ? svgHeight - hotOilLevel * scale - 5
-            : 0
-        }
-        fontSize="12"
-        fill="#DC2626"
-      >
-        Hot Oil Level ({hotTemp} °C)
+      {/* Hot label and line */}
+      <text x="-100" y={hotY - 2} fontSize="12" fill="#DC2626">
+        Hot ({hotTemp}°C)
       </text>
+      <line
+        x1="-100"
+        x2="30"
+        y1={hotY}
+        y2={hotY}
+        stroke="#DC2626"
+        strokeWidth="1"
+      />
     </svg>
   );
 }
