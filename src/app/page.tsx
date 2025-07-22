@@ -82,17 +82,8 @@ export default function OilExpansionPage() {
   const labelClass = "block text-sm font-medium text-[var(--field-text)]";
 
   return (
-    <main className="min-h-screen bg-[var(--background)] py-10 px-4">
-      <div className="max-w-5xl mx-auto space-y-8">
-        <header className="space-y-2 text-center">
-          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
-            Transformer Oil Expansion Tool
-          </h1>
-          <p className="text-[var(--text-muted)]">
-            Estimate oil rise based on volume, temperature, and tank shape.
-          </p>
-        </header>
-
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+      <div className="max-w-5xl mx-auto py-10 px-4 space-y-8">
         {/* Responsive 2-col layout ------------------------------------------------ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* --------------------------------------------------------------------- */}
@@ -284,37 +275,44 @@ export default function OilExpansionPage() {
           {/* --------------------------------------------------------------------- */}
           {/* RIGHT: Results + Visualization                                       */}
           {/* --------------------------------------------------------------------- */}
-          <div className="bg-[var(--surface)] rounded-xl shadow-md p-6 space-y-6">
-            <section className="space-y-2">
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">
-                Results
-              </h2>
-              <p className="text-[var(--text-secondary)]">
-                Expanded oil volume:{" "}
-                <strong>
-                  {expandedVolumeDisplay.toFixed(2)} {volumeUnit}
-                </strong>
-              </p>
-              <p className="text-[var(--text-secondary)]">
-                Oil rise:{" "}
-                <strong>
-                  {oilRiseDisplay.toFixed(2)} {lengthUnit}
-                </strong>
-              </p>
-              <p className="text-[var(--text-secondary)]">
-                140°C oil level:{" "}
-                <strong>
-                  {hotOilLevelDisplay.toFixed(2)} {lengthUnit}
-                </strong>
-              </p>
-            </section>
+          {/* Results container */}
+          <div className="space-y-6">
+            {/* Results card */}
+            <div className="bg-[var(--surface)] rounded-xl shadow-md p-6 space-y-4">
+              <section className="space-y-2">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
+                  Results
+                </h2>
+                <p className="text-[var(--text-secondary)]">
+                  Expanded oil volume:{" "}
+                  <strong>
+                    {expandedVolumeDisplay.toFixed(2)} {volumeUnit}
+                  </strong>
+                </p>
+                <p className="text-[var(--text-secondary)]">
+                  Oil rise:{" "}
+                  <strong>
+                    {oilRiseDisplay.toFixed(2)} {lengthUnit}
+                  </strong>
+                </p>
+                <p className="text-[var(--text-secondary)]">
+                  140°C oil level:{" "}
+                  <strong>
+                    {hotOilLevelDisplay.toFixed(2)} {lengthUnit}
+                  </strong>
+                </p>
+              </section>
+            </div>
 
-            {/* Visualization */}
+            {/* Visualization card */}
             {!isNaN(hotOilLevelMeters) &&
               !isNaN(ambientOilLevelMeters) &&
               isFinite(hotOilLevelMeters) &&
               isFinite(ambientOilLevelMeters) && (
-                <div className="mt-4">
+                <div className="bg-[var(--surface)] rounded-xl shadow-md p-6">
+                  <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-2">
+                    Visualization
+                  </h2>
                   <OilLevelVisualizer
                     ambientOilLevel={ambientOilLevelMeters}
                     hotOilLevel={hotOilLevelMeters}

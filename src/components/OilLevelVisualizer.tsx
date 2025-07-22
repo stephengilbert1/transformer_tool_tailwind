@@ -67,11 +67,11 @@ export default function OilLevelVisualizer({
       />
 
       {/* Ambient label and line */}
-      <text x="-100" y={ambientY - 2} fontSize="12" fill="#3B82F6">
+      <text x="-80" y={ambientY - 2} fontSize="12" fill="#3B82F6">
         Ambient ({ambientTemp}°C)
       </text>
       <line
-        x1="-100"
+        x1="-80"
         x2="30"
         y1={ambientY}
         y2={ambientY}
@@ -80,11 +80,11 @@ export default function OilLevelVisualizer({
       />
 
       {/* Hot label and line */}
-      <text x="-100" y={hotY - 2} fontSize="12" fill="#DC2626">
+      <text x="-80" y={hotY - 2} fontSize="12" fill="#DC2626">
         Hot ({hotTemp}°C)
       </text>
       <line
-        x1="-100"
+        x1="-80"
         x2="30"
         y1={hotY}
         y2={hotY}

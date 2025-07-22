@@ -1,25 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  :root {
-    --background: #ffffff;
-    --foreground: #171717;
+  --background: #f5f5f5;
+  --foreground: #171717;
 
-    --text-primary: #171717;
-    --text-secondary: #444444;
-    --text-muted: #666666;
+  --text-primary: #171717;
+  --text-secondary: #444444;
+  --text-muted: #666666;
 
-    --surface: #f9f9f9;
-    --border: #e2e2e2;
+  --surface: #ffffff;
+  --border: #e2e2e2;
 
-    --field-bg: #ffffff;
-    --field-border: #cccccc;
-    --field-text: #171717;
-    --field-placeholder: #888888;
+  --field-bg: #ffffff;
+  --field-border: #cccccc;
+  --field-text: #171717;
+  --field-placeholder: #888888;
 
-    --font-sans: Arial, Helvetica, sans-serif;
-    --font-mono: monospace;
-  }
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: monospace;
 }
 
 .dark {

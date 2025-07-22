@@ -28,9 +28,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}
       >
-        <div className="flex justify-end p-4">
+        <header className="sticky top-0 z-50 bg-[var(--background)] border-b border-[var(--border)] px-6 py-4 flex items-center justify-between shadow-sm">
+          <h1 className="text-xl font-semibold text-[var(--text-primary)]">
+            Transformer Oil Expansion Tool
+          </h1>
           <ThemeToggle />
-        </div>
+        </header>
         {children}
       </body>
     </html>
