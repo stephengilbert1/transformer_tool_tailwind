@@ -1,17 +1,16 @@
-// src/components/ThemeToggle.tsx
 "use client";
-
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
+  const [mounted, setMounted] = useState(false); // NEW
 
   useEffect(() => {
+    setMounted(true); // now safe to read localStorage + matchMedia
     const stored = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-
     const enabled = stored === "dark" || (!stored && prefersDark);
     setIsDark(enabled);
     document.documentElement.classList.toggle("dark", enabled);
@@ -23,6 +22,8 @@ export default function ThemeToggle() {
     document.documentElement.classList.toggle("dark", !isDark);
     localStorage.setItem("theme", newTheme);
   };
+
+  if (!mounted) return null; // prevent hydration mismatch
 
   return (
     <button
