@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 type OilLevelVisualizerProps = {
   ambientOilLevel: number; // in meters
   hotOilLevel: number; // in meters
