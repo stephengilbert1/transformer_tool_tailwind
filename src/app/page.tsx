@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import OilLevelVisualizer from "@/components/OilLevelVisualizer";
+import { CardGlass } from "@/components/CardGlass";
 
 // --- Unit helpers -----------------------------------------------------------
 function convertLengthToMeters(value: number, unit: "cm" | "in"): number {
@@ -82,14 +83,11 @@ export default function OilExpansionPage() {
   const labelClass = "block text-sm font-medium text-[var(--field-text)]";
 
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <div className="max-w-5xl mx-auto py-10 px-4 space-y-8">
-        {/* Responsive 2-col layout ------------------------------------------------ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          {/* --------------------------------------------------------------------- */}
-          {/* LEFT: Input Form                                                     */}
-          {/* --------------------------------------------------------------------- */}
-          <div className="bg-[var(--surface)] rounded-xl shadow-md p-6 space-y-6">
+    <main className="flex flex-col md:flex-row w-full gap-8 p-4 md:p-8 max-w-screen-xl mx-auto">
+      <div className="flex flex-col md:flex-row gap-8 items-stretch w-full">
+        {/* LEFT: Form */}
+        <div className="w-full md:w-1/2 flex justify-center md:py-8">
+          <CardGlass className="space-y-6 w-full h-fit md:h-full">
             {/* Volume */}
             <div className="flex gap-4 items-end">
               <div className="flex-1 space-y-1">
@@ -270,58 +268,64 @@ export default function OilExpansionPage() {
                 </select>
               </div>
             </div>
-          </div>
+          </CardGlass>
+        </div>
 
-          {/* --------------------------------------------------------------------- */}
-          {/* RIGHT: Results + Visualization                                       */}
-          {/* --------------------------------------------------------------------- */}
-          {/* Results container */}
-          <div className="space-y-6">
-            {/* Results card */}
-            <div className="bg-[var(--surface)] rounded-xl shadow-md p-6 space-y-4">
-              <section className="space-y-2">
-                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
-                  Results
-                </h2>
-                <p className="text-[var(--text-secondary)]">
-                  Expanded oil volume:{" "}
-                  <strong>
-                    {expandedVolumeDisplay.toFixed(2)} {volumeUnit}
-                  </strong>
-                </p>
-                <p className="text-[var(--text-secondary)]">
-                  Oil rise:{" "}
-                  <strong>
-                    {oilRiseDisplay.toFixed(2)} {lengthUnit}
-                  </strong>
-                </p>
-                <p className="text-[var(--text-secondary)]">
-                  140°C oil level:{" "}
-                  <strong>
-                    {hotOilLevelDisplay.toFixed(2)} {lengthUnit}
-                  </strong>
-                </p>
-              </section>
+        {/* RIGHT: Results + Visualizer */}
+        <div className="w-full md:w-1/2 flex flex-col justify-between flex-1">
+          {/* Results section aligned to top */}
+          <section className="mb-6 px-2 md:px-0 text-foreground space-y-6">
+            <h2 className="text-xl md:text-2xl font-bold tracking-wide uppercase text-[var(--text-muted)]">
+              Results
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {/* Expanded Volume */}
+              <div className="flex flex-col items-start">
+                <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
+                  Expanded Volume
+                </span>
+                <span className="text-3xl md:text-4xl font-semibold text-[#f5c359]">
+                  {expandedVolumeDisplay.toFixed(2)} {volumeUnit}
+                </span>
+              </div>
+
+              {/* Oil Rise */}
+              <div className="flex flex-col items-start">
+                <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
+                  Oil Rise
+                </span>
+                <span className="text-3xl md:text-4xl font-semibold text-[#f87171]">
+                  {oilRiseDisplay.toFixed(2)} {lengthUnit}
+                </span>
+              </div>
+
+              {/* 140°C Level */}
+              <div className="flex flex-col items-start">
+                <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
+                  140°C Level
+                </span>
+                <span className="text-3xl md:text-4xl font-semibold text-[#f87171]">
+                  {hotOilLevelDisplay.toFixed(2)} {lengthUnit}
+                </span>
+              </div>
             </div>
+          </section>
 
-            {/* Visualization card */}
-            {!isNaN(hotOilLevelMeters) &&
-              !isNaN(ambientOilLevelMeters) &&
-              isFinite(hotOilLevelMeters) &&
-              isFinite(ambientOilLevelMeters) && (
-                <div className="bg-[var(--surface)] rounded-xl shadow-md p-6">
-                  <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-2">
-                    Visualization
-                  </h2>
-                  <OilLevelVisualizer
-                    ambientOilLevel={ambientOilLevelMeters}
-                    hotOilLevel={hotOilLevelMeters}
-                    ambientTemp={ambientTemp}
-                    hotTemp={hotTemp}
-                    tankHeightMeters={tankHeightMeters}
-                  />
-                </div>
-              )}
+          {/* Visualizer aligned to bottom */}
+          <div className="mt-6 md:flex-grow flex items-end overflow-hidden">
+            <OilLevelVisualizer
+              ambientOilLevel={ambientOilLevelMeters}
+              hotOilLevel={hotOilLevelMeters}
+              ambientTemp={ambientTemp}
+              hotTemp={hotTemp}
+              tankHeightMeters={tankHeightMeters}
+              tankWidthMeters={
+                tankShape === "cylindrical"
+                  ? convertLengthToMeters(diameter, lengthUnit)
+                  : convertLengthToMeters(width, lengthUnit)
+              }
+            />
           </div>
         </div>
       </div>

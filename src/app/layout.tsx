@@ -24,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground transition-colors duration-300 flex flex-col min-h-screen`}
       >
         <header className="sticky top-0 z-50 bg-[var(--background)] border-b border-[var(--border)] px-6 py-4 flex items-center justify-between shadow-sm">
           <h1 className="text-xl font-semibold text-[var(--text-primary)]">
@@ -34,7 +34,8 @@ export default function RootLayout({
           </h1>
           <ThemeToggle />
         </header>
-        {children}
+
+        <main className="flex-1 w-full">{children}</main>
       </body>
     </html>
   );
