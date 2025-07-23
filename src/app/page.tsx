@@ -282,37 +282,41 @@ export default function OilExpansionPage() {
               Results
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 gap-16 max-w-[700px] mx-auto">
               {/* Expanded Volume */}
-              <div className="flex flex-col items-start">
-                <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
-                  Expanded Volume
-                </span>
-                <span className="text-3xl md:text-4xl font-semibold text-[#f5c359]">
-                  {expandedVolumeDisplay.toFixed(2)}{" "}
-                  {volumeUnit === "gallons" ? "gal" : "L"}
-                </span>
+              <div className="flex flex-col items-center">
+                <div className="text-left w-fit">
+                  <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
+                    Expanded Volume
+                  </span>
+                  <div className="text-4xl md:text-5xl font-bold text-[#f5c359] leading-tight whitespace-nowrap">
+                    {expandedVolumeDisplay.toFixed(2)}{" "}
+                    {volumeUnit === "gallons" ? "gal" : "L"}
+                  </div>
+                </div>
               </div>
 
               {/* Oil Rise */}
-              <div className="flex flex-col items-start">
-                <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
-                  Oil Rise
-                </span>
-                <span className="text-3xl md:text-4xl font-semibold text-[#f87171]">
-                  {oilRiseDisplay.toFixed(2)} {lengthUnit}
-                </span>
+              <div className="flex flex-col items-center">
+                <div className="text-left w-fit">
+                  <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
+                    Oil Rise
+                  </span>
+                  <div className="text-4xl md:text-5xl font-bold text-[#f87171] leading-tight whitespace-nowrap">
+                    {oilRiseDisplay.toFixed(2)} {lengthUnit}
+                  </div>
+                </div>
               </div>
 
-              {/* 140°C Level */}
-              <div className="flex flex-col items-start">
+              {/* 140°C Level
+              <div className="flex flex-col items-start text-left">
                 <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
                   140°C Level
                 </span>
-                <span className="text-3xl md:text-4xl font-semibold text-[#f87171]">
+                <span className="text-4xl md:text-5xl font-bold text-[#f87171] leading-tight">
                   {hotOilLevelDisplay.toFixed(2)} {lengthUnit}
                 </span>
-              </div>
+              </div> */}
             </div>
           </section>
 
