@@ -1,7 +1,10 @@
+"use client";
+import { useEffect, useState } from "react";
+
 type OilLevelVisualizerProps = {
-  ambientOilLevel: number; // in meters
-  hotOilLevel: number; // in meters
-  ambientTemp: number; // In C
+  ambientOilLevel: number;
+  hotOilLevel: number;
+  ambientTemp: number;
   hotTemp: number;
   tankHeightMeters: number;
   tankWidthMeters: number;
@@ -15,28 +18,37 @@ export default function OilLevelVisualizer({
   tankHeightMeters,
   tankWidthMeters,
 }: OilLevelVisualizerProps) {
-  const topPadding = 40; // extra space for labels (in pixels)
-  const tankDisplayHeight = 400; // Or optionally base this on containerRef if you want 1:1 matching.
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const topPadding = 40;
+  const bottomPadding = 20;
+  const tankDisplayHeight = 400;
   const scale = tankDisplayHeight / tankHeightMeters;
   const tankDisplayWidth = tankWidthMeters * scale;
   const leftPadding = 100;
   const rightPadding = 100;
   const tankX = leftPadding;
   const svgWidth = tankDisplayWidth + leftPadding + rightPadding;
-  const svgHeight = tankDisplayHeight + topPadding;
+  const svgHeight = tankDisplayHeight + topPadding + bottomPadding;
+
+  // 🎨 Dark-mode first color palette
+  const tankFill = "transparent"; // background shows through
+  const tankStroke = "#94a3b8"; // slate-400
+  const ambientLabel = "#60a5fa"; // blue-400
+  const hotLabel = "#f87171"; // red-400
 
   const ambientY = topPadding + tankDisplayHeight - ambientOilLevel * scale;
   let hotY = topPadding + tankDisplayHeight - hotOilLevel * scale;
 
-  // Ensure at least 16px spacing between labels
   const minSpacing = 16;
   if (Math.abs(hotY - ambientY) < minSpacing) {
-    if (hotY < ambientY) {
-      hotY = ambientY - minSpacing;
-    } else {
-      hotY = ambientY + minSpacing;
-    }
+    hotY = hotY < ambientY ? ambientY - minSpacing : ambientY + minSpacing;
   }
 
   return (
@@ -46,29 +58,30 @@ export default function OilLevelVisualizer({
         className="w-full h-full"
         preserveAspectRatio="xMidYMid meet"
       >
-        {/* Gradient definitions */}
         <defs>
           <linearGradient id="ambientFill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.5" />
             <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.25" />
           </linearGradient>
+
           <linearGradient id="hotFill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#F87171" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#DC2626" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#FCA5A5" stopOpacity="0.25" />
           </linearGradient>
-          {/* Clip path for oil fill */}
+
           <clipPath id="tankClip">
             <rect
               x={tankX}
               y={topPadding}
               width={tankDisplayWidth}
-              height={tankDisplayHeight}
+              height={tankDisplayHeight + 2}
               rx="12"
               ry="12"
             />
           </clipPath>
         </defs>
-        {/* Tank outline */}
+
+        {/* Tank */}
         <rect
           x={tankX}
           y={topPadding}
@@ -76,11 +89,12 @@ export default function OilLevelVisualizer({
           height={tankDisplayHeight}
           rx="12"
           ry="12"
-          fill="#1f2937" // Tailwind slate-800
-          stroke="#6b7280" // Tailwind gray-500
+          fill={tankFill}
+          stroke={tankStroke}
           strokeWidth="1.5"
         />
-        {/* Ambient oil level (blue) */}
+
+        {/* Ambient fill */}
         <rect
           clipPath="url(#tankClip)"
           x={tankX}
@@ -89,7 +103,8 @@ export default function OilLevelVisualizer({
           height={svgHeight - ambientY}
           fill="url(#ambientFill)"
         />
-        {/* Hot oil level (red) */}
+
+        {/* Hot fill */}
         <rect
           clipPath="url(#tankClip)"
           x={tankX}
@@ -99,12 +114,12 @@ export default function OilLevelVisualizer({
           fill="url(#hotFill)"
         />
 
-        {/* Ambient label and line */}
+        {/* Labels */}
         <text
           x={tankX + tankDisplayWidth + 8}
           y={ambientY}
           fontSize="12"
-          fill="#60a5fa"
+          fill={ambientLabel}
           textAnchor="start"
           dominantBaseline="middle"
         >
@@ -115,16 +130,14 @@ export default function OilLevelVisualizer({
           x2={tankX}
           y1={ambientY}
           y2={ambientY}
-          stroke="#60a5fa"
+          stroke={ambientLabel}
           strokeWidth="1"
         />
-
-        {/* Hot label and line */}
         <text
           x={tankX + tankDisplayWidth + 8}
           y={hotY}
           fontSize="12"
-          fill="#f87171"
+          fill={hotLabel}
           textAnchor="start"
           dominantBaseline="middle"
         >
@@ -135,7 +148,7 @@ export default function OilLevelVisualizer({
           x2={tankX}
           y1={hotY}
           y2={hotY}
-          stroke="#f87171"
+          stroke={hotLabel}
           strokeWidth="1"
         />
       </svg>
