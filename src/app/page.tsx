@@ -83,7 +83,7 @@ export default function OilExpansionPage() {
   const labelClass = "block text-sm font-medium text-[var(--field-text)]";
 
   return (
-    <main className="flex flex-col md:flex-row w-full gap-8 p-4 md:p-8 max-w-screen-xl mx-auto">
+    <main className="flex flex-col md:flex-row w-full gap-6 p-4 sm:p-6 md:p-8 max-w-full md:max-w-[1600px] mx-auto">
       <div className="flex flex-col md:flex-row gap-8 items-stretch w-full">
         {/* LEFT: Form */}
         <div className="w-full md:w-1/2 flex justify-center md:py-8">

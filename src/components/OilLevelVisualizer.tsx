@@ -22,7 +22,7 @@ export default function OilLevelVisualizer({
 
   const scale = tankDisplayHeight / tankHeightMeters;
   const tankDisplayWidth = tankWidthMeters * scale;
-  const leftPadding = 20;
+  const leftPadding = 100;
   const rightPadding = 100;
   const tankX = leftPadding;
   const svgWidth = tankDisplayWidth + leftPadding + rightPadding;

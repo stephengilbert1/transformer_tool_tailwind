@@ -35,7 +35,9 @@ export default function RootLayout({
           <ThemeToggle />
         </header>
 
-        <main className="flex-1 w-full">{children}</main>
+        <main className="flex-1 w-full">
+          <div className="max-w-[1600px] mx-auto px-4 md:px-8">{children}</div>
+        </main>
       </body>
     </html>
   );
