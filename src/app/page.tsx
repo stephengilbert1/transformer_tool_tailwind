@@ -3,6 +3,7 @@
 import { useState } from "react";
 import OilLevelVisualizer from "@/components/OilLevelVisualizer";
 import { CardGlass } from "@/components/CardGlass";
+import { useTheme } from "next-themes";
 
 // --- Unit helpers -----------------------------------------------------------
 function convertLengthToMeters(value: number, unit: "cm" | "in"): number {
@@ -19,6 +20,8 @@ function convertHeightFromMeters(value: number, unit: "cm" | "in"): number {
 }
 
 export default function OilExpansionPage() {
+  const { theme } = useTheme();
+
   // Form state ---------------------------------------------------------------
   const [volume, setVolume] = useState<number>(42);
   const [volumeUnit, setVolumeUnit] = useState<"liters" | "gallons">("gallons");
@@ -69,7 +72,10 @@ export default function OilExpansionPage() {
 
   // Display conversions
   const oilRiseDisplay = convertHeightFromMeters(oilRise, lengthUnit);
-
+  const hotOilLevelDisplay = convertHeightFromMeters(
+    hotOilLevelMeters,
+    lengthUnit
+  );
   const expandedVolumeDisplay =
     volumeUnit === "gallons" ? expandedVolume / 3.78541 : expandedVolume;
 
