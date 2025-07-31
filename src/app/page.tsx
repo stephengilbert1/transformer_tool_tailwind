@@ -20,7 +20,7 @@ function convertHeightFromMeters(value: number, unit: "cm" | "in"): number {
 }
 
 export default function OilExpansionPage() {
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
 
   // Form state ---------------------------------------------------------------
   const [volume, setVolume] = useState<number>(42);
@@ -72,10 +72,10 @@ export default function OilExpansionPage() {
 
   // Display conversions
   const oilRiseDisplay = convertHeightFromMeters(oilRise, lengthUnit);
-  const hotOilLevelDisplay = convertHeightFromMeters(
-    hotOilLevelMeters,
-    lengthUnit
-  );
+  // const hotOilLevelDisplay = convertHeightFromMeters(
+  //   hotOilLevelMeters,
+  //   lengthUnit
+  // );
   const expandedVolumeDisplay =
     volumeUnit === "gallons" ? expandedVolume / 3.78541 : expandedVolume;
 
