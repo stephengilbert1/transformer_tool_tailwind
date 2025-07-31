@@ -3,7 +3,7 @@
 import { useState } from "react";
 import OilLevelVisualizer from "@/components/OilLevelVisualizer";
 import { CardGlass } from "@/components/CardGlass";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 
 // --- Unit helpers -----------------------------------------------------------
 function convertLengthToMeters(value: number, unit: "cm" | "in"): number {
