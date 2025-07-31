@@ -86,11 +86,11 @@ export default function OilExpansionPage() {
   const labelClass = "block text-sm font-medium text-[var(--field-text)]";
 
   return (
-    <main className="flex flex-col md:flex-row w-full gap-6 p-4 sm:p-6 md:p-8 max-w-full md:max-w-[1600px] mx-auto">
+    <main className="flex flex-col md:flex-row w-full gap-6 p-4 sm:p-6 md:p-8 max-w-full md:max-w-[1600px] mx-auto md:h-[calc(100vh-80px)] md:overflow-hidden overflow-auto">
       <div className="flex flex-col md:flex-row gap-8 items-stretch w-full">
         {/* LEFT: Form */}
         <div className="w-full md:w-1/2 flex justify-center md:py-8">
-          <CardGlass className="space-y-6 w-full h-fit md:h-full">
+          <CardGlass className="space-y-6 w-full max-h-full overflow-auto px-4 py-6">
             {/* Volume */}
             <div className="flex gap-4 items-end">
               <div className="flex-1 space-y-1">
@@ -275,53 +275,39 @@ export default function OilExpansionPage() {
         </div>
 
         {/* RIGHT: Results + Visualizer */}
-        <div className="w-full md:w-1/2 flex flex-col justify-between flex-1">
-          {/* Results section aligned to top */}
-          <section className="mb-6 px-2 md:px-0 text-foreground space-y-6">
-            <h2 className="text-xl md:text-2xl font-bold tracking-wide uppercase text-[var(--text-muted)]">
+        <div className="w-full md:w-1/2 flex flex-col flex-1">
+          {/* Results section, vertically centered */}
+          <section className="flex-1 flex flex-col justify-center text-foreground px-2 md:px-0 space-y-8">
+            <h2 className="text-lg md:text-xl font-semibold tracking-wide uppercase text-[var(--text-muted)] text-left">
               Results
             </h2>
 
-            <div className="grid grid-cols-2 gap-16 max-w-[700px] mx-auto">
+            <div className="flex flex-col gap-8 max-w-[700px] mx-auto w-full">
               {/* Expanded Volume */}
-              <div className="flex flex-col items-center">
-                <div className="text-left w-fit">
-                  <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
-                    Expanded Volume
-                  </span>
-                  <div className="text-4xl md:text-5xl font-bold text-[#f5c359] leading-tight whitespace-nowrap">
-                    {expandedVolumeDisplay.toFixed(2)}{" "}
-                    {volumeUnit === "gallons" ? "gal" : "L"}
-                  </div>
-                </div>
+              <div className="flex flex-row items-center flex-wrap gap-x-3 justify-start">
+                <span className="text-4xl md:text-5xl font-bold text-[var(--text-muted)]">
+                  Expanded Volume:
+                </span>
+                <span className="text-4xl md:text-5xl font-bold text-[#f5c359] whitespace-nowrap">
+                  {expandedVolumeDisplay.toFixed(2)}{" "}
+                  {volumeUnit === "gallons" ? "gal" : "L"}
+                </span>
               </div>
 
               {/* Oil Rise */}
-              <div className="flex flex-col items-center">
-                <div className="text-left w-fit">
-                  <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
-                    Oil Rise
-                  </span>
-                  <div className="text-4xl md:text-5xl font-bold text-[#f87171] leading-tight whitespace-nowrap">
-                    {oilRiseDisplay.toFixed(2)} {lengthUnit}
-                  </div>
-                </div>
+              <div className="flex flex-row items-center flex-wrap gap-x-3 justify-start">
+                <span className="text-4xl md:text-5xl font-bold text-[var(--text-muted)]">
+                  Oil Rise:
+                </span>
+                <span className="text-4xl md:text-5xl font-bold text-[#f87171] whitespace-nowrap">
+                  {oilRiseDisplay.toFixed(2)} {lengthUnit}
+                </span>
               </div>
-
-              {/* 140°C Level
-              <div className="flex flex-col items-start text-left">
-                <span className="text-sm md:text-base uppercase tracking-widest text-[var(--text-muted)]">
-                  140°C Level
-                </span>
-                <span className="text-4xl md:text-5xl font-bold text-[#f87171] leading-tight">
-                  {hotOilLevelDisplay.toFixed(2)} {lengthUnit}
-                </span>
-              </div> */}
             </div>
           </section>
 
           {/* Visualizer aligned to bottom */}
-          <div className="mt-6 md:flex-grow flex items-end overflow-hidden">
+          <div className="mt-6 md:flex-grow flex items-end overflow-hidden max-h-[50vh]">
             <OilLevelVisualizer
               ambientOilLevel={ambientOilLevelMeters}
               hotOilLevel={hotOilLevelMeters}
